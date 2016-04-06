@@ -5,13 +5,12 @@
     "name": "slim/slim-skeleton",
     "description": "A Slim Framework skeleton application for rapid development",
     "keywords": ["microframework","rest","router", "psr7"],
-    "homepage": "z",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Zsolt Sándor",
+            "email": "zsolt.sandor@gmx.com",
+            "homepage": "http://www.sandorzsolt.hu"
         }
     ],
     "require": {
