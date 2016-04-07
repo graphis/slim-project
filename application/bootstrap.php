@@ -22,5 +22,10 @@ $app->get('/hello/{name}', function (Request $request, Response $response) {
 });
 
 
+// test Domain controller
+$app->any('/mikka/{name}', 'Application\Domain\Mikkamakka');
+
+
+
 
 $app->run();
