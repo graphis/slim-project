@@ -1,6 +1,9 @@
 <IfModule rewrite_module>
     # turn on rewriting
     RewriteEngine On
+
+	# disable indexing
+	Options -Indexes
     
     # turn empty reqests into requests for "index.html",
     # keeping the query string intact
