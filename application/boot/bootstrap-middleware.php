@@ -9,52 +9,20 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-// slim
+// framework
 use \Slim\App;
 
-// middlewares
-use \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
+// application
+use Application\Middleware\Debug;
 
 
 
-//
-// $app = new App;
-
-
-
-// $app = new \Slim\App;
-$app = new App([
-    'settings' => [
-        'debug'               => true,      // On/Off whoops error
-        'whoops.editor'       => 'sublime',
-        'displayErrorDetails' => true,      // Display call stack in orignal slim error when debug is off
-    ]
-]);
-if ($app->getContainer()->settings['debug'] === false) {
-    $container['errorHandler'] = function ($c) {
-        return function ($request, $response, $exception) use ($c) {
-            $data = [
-                'code' => $exception->getCode(),
-                'message' => $exception->getMessage(),
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
-                'trace' => explode("\n", $exception->getTraceAsString()),
-            ];
-            return $c->get('response')->withStatus(500)
-                    ->withHeader('Content-Type', 'application/json')
-                    ->write(json_encode($data));
-        };
-    };
-}else{
-    $app->add(new WhoopsMiddleware);
-}
+// 
+$app = new App;
 
 // add middleware
-// $app->add(new WhoopsMiddleware);
-// middleware
-// $app->add(new \Application\Middleware\Cache($db));
-// $subject->add( new \Application\Middleware\ExampleMiddleware() );
-// $app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
+$app->add(new Debug());
+
 
 
 
@@ -109,30 +77,12 @@ catch(PDOException $e)
 
 
 // routes
-// Application middleware
-$app->add(function ($request, $response, $next) {
-	$response->getBody()->write('BEFORE <pre>');
-	$response = $next($request, $response);
-	$response->getBody()->write('</pre> AFTER');
-
-	return $response;
-});
-
-// Route middleware
-$mw = function ($request, $response, $next) {
-    $response->getBody()->write('BEFORE');
-    $response = $next($request, $response);
-    $response->getBody()->write('AFTER');
-
-    return $response;
-};
-
 $app->get('/hello/{name}', function (Request $request, Response $response) {
     $name = $request->getAttribute('name');
     $response->getBody()->write("Hello, $name");
 
     return $response;
-})->add($mw);
+});
 
 
 // test Domain controller
