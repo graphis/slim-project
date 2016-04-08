@@ -5,13 +5,24 @@
 
 
 
+// system
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+// slim
 use \Slim\App;
 
+// middlewares
+use \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
+
+
+
+//
+// $app = new App;
+
+
+
 // $app = new \Slim\App;
-use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
 $app = new App([
     'settings' => [
         'debug'               => true,      // On/Off whoops error
@@ -38,6 +49,14 @@ if ($app->getContainer()->settings['debug'] === false) {
     $app->add(new WhoopsMiddleware);
 }
 
+// add middleware
+// $app->add(new WhoopsMiddleware);
+// middleware
+// $app->add(new \Application\Middleware\Cache($db));
+// $subject->add( new \Application\Middleware\ExampleMiddleware() );
+// $app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
+
+
 
 // db
 // $databasepath = 'sqlite:./application/database/db.sqlite';
@@ -45,11 +64,11 @@ if ($app->getContainer()->settings['debug'] === false) {
 
 // http://code.tutsplus.com/tutorials/why-you-should-be-using-phps-pdo-for-database-access--net-12059
 
-$dsn = 'sqlite:./application/database/db.sqlite';
+$dsn = 'sqlite:../application/database/db.sqlite';
 $username = 'root';
 $password = 'password_here';
 try {
-	$db = new PDO($dsn, $username, $password); // also allows an extra parameter of configuration
+	$db = new PDO($dsn); // also allows an extra parameter of configuration
 	// Set errormode to exceptions
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
@@ -89,15 +108,6 @@ catch(PDOException $e)
 
 
 
-// middleware
-// $app->add(new \Application\Middleware\Cache($db));
-// $subject->add( new \Application\Middleware\ExampleMiddleware() );
-$app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
-
-
-
-
-
 // routes
 // Application middleware
 $app->add(function ($request, $response, $next) {
@@ -132,3 +142,7 @@ $app->any('/mikka/{name}', 'Application\Domain\Mikkamakka');
 
 
 $app->run();
+
+
+
+// eof
