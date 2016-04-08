@@ -8,9 +8,35 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+use \Slim\App;
 
-
-$app = new \Slim\App;
+// $app = new \Slim\App;
+use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
+$app = new App([
+    'settings' => [
+        'debug'               => true,      // On/Off whoops error
+        'whoops.editor'       => 'sublime',
+        'displayErrorDetails' => true,      // Display call stack in orignal slim error when debug is off
+    ]
+]);
+if ($app->getContainer()->settings['debug'] === false) {
+    $container['errorHandler'] = function ($c) {
+        return function ($request, $response, $exception) use ($c) {
+            $data = [
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => explode("\n", $exception->getTraceAsString()),
+            ];
+            return $c->get('response')->withStatus(500)
+                    ->withHeader('Content-Type', 'application/json')
+                    ->write(json_encode($data));
+        };
+    };
+}else{
+    $app->add(new WhoopsMiddleware);
+}
 
 
 // db
@@ -66,7 +92,7 @@ catch(PDOException $e)
 // middleware
 // $app->add(new \Application\Middleware\Cache($db));
 // $subject->add( new \Application\Middleware\ExampleMiddleware() );
-
+$app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
 
 
 
