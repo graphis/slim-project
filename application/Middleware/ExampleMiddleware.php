@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Middleware\Cache;
+namespace Application\Middleware;
 
 class ExampleMiddleware
 {
@@ -15,9 +15,9 @@ class ExampleMiddleware
      */
     public function __invoke($request, $response, $next)
     {
-        $response->getBody()->write('BEFORE');
+        $response->getBody()->write('BEFORE XXXXXX');
         $response = $next($request, $response);
-        $response->getBody()->write('AFTER');
+        $response->getBody()->write('AFTER XXXXXX');
 
         return $response;
     }
