@@ -2,6 +2,9 @@
 
 namespace Application\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 class ExampleMiddleware
 {
     /**

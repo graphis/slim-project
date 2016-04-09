@@ -2,6 +2,9 @@
 
 namespace Application\Middleware;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 class Debug
 {
     /**
@@ -16,6 +19,16 @@ class Debug
     public function __invoke($request, $response, $next)
     {
         $response->getBody()->write('<pre>');
+
+        // http://www.slimframework.com/docs/cookbook/retrieving-current-route.html
+        $route = $request->getAttribute('route');
+        $name = $route->getName();
+        $groups = $route->getGroups();
+        $methods = $route->getMethods();
+        $arguments = $route->getArguments();
+
+        $response->getBody()->write('arguments: ' . $arguments['name'] . '<br/>');
+
         $response = $next($request, $response);
         $response->getBody()->write('</pre>');
 

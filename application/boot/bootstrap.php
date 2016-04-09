@@ -22,6 +22,11 @@ use \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
 
 
 
+
+
+
+
+
 // $app = new \Slim\App;
 $app = new App([
     'settings' => [
