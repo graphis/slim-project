@@ -22,12 +22,12 @@ class Debug
 
         // http://www.slimframework.com/docs/cookbook/retrieving-current-route.html
         $route = $request->getAttribute('route');
-        $name = $route->getName();
-        $groups = $route->getGroups();
-        $methods = $route->getMethods();
-        $arguments = $route->getArguments();
+//        $name = $route->getName();
+//        $groups = $route->getGroups();
+//        $methods = $route->getMethods();
+//        $arguments = $route->getArguments();
 
-        $response->getBody()->write('arguments: ' . $arguments['name'] . '<br/>');
+//        $response->getBody()->write('arguments: ' . $arguments['name'] . '<br/>');
 
         $response = $next($request, $response);
         $response->getBody()->write('</pre>');
