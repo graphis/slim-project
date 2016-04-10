@@ -19,7 +19,8 @@
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
         "league/plates": "^3.1",
-		"zeuxisoo/slim-whoops": "0.5.*"
+		"zeuxisoo/slim-whoops": "0.5.*",
+        "slim/twig-view": "^2.1"
     },
     "autoload": {
         "psr-4": {
