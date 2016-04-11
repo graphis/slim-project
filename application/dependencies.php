@@ -19,6 +19,19 @@ $container['view'] = function ($c) {
     return $view;
 };
 
+//////
+// CSRF guard
+/*$container['csrf'] = function ($c) {
+    $guard = new \Slim\Csrf\Guard();
+    $guard->setFailureCallable(function ($request, $response, $next) {
+        $request = $request->withAttribute("csrf_status", false);
+        return $next($request, $response);
+    });
+    return $guard;
+};*/
+////
+
+
 // Flash messages
 $container['flash'] = function ($c) {
     return new Slim\Flash\Messages;
@@ -43,4 +56,8 @@ $container['logger'] = function ($c) {
 
 $container[Application\Action\HomeAction::class] = function ($c) {
     return new Application\Action\HomeAction($c->get('view'), $c->get('logger'));
+};
+
+$container[Application\Action\MikkaAction::class] = function ($c) {
+    return new Application\Action\MikkaAction($c->get('view'), $c->get('logger'));
 };
